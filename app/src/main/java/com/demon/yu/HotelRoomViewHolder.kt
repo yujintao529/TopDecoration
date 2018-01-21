@@ -14,5 +14,7 @@ class HotelRoomViewHolder(view: View) : MainActivity.ViewHolder(view) {
         var hotelRoom = t as HotelRoom
         title.text = hotelRoom.hotelTitle
         hotelImage.setImageResource(hotelRoom.hotelImage)
+        wifi.text=hotelRoom.wifi
+        price.text=hotelRoom.price
     }
 }

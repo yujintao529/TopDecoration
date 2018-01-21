@@ -61,11 +61,11 @@ public class TopDecoration extends RecyclerView.ItemDecoration {
         int childNumber;
         if (isParent) {
             parentPosition = position;
-            childNumber = VirtualFamily.parentChildern(position);
+            childNumber = VirtualFamily.parentChildren(position);
             lastChildPosition = position + childNumber;
         } else {
             parentPosition = VirtualFamily.childParentPosition(position);
-            childNumber = VirtualFamily.parentChildern(parentPosition);
+            childNumber = VirtualFamily.parentChildren(parentPosition);
             lastChildPosition = parentPosition + childNumber;
         }
         View parentView = gridLayoutManager.findViewByPosition(parentPosition);

@@ -21,7 +21,7 @@ public interface VirtualFamily {
      * @param position
      * @return 最后一个子类型的位置
      */
-    int parentChildern(int position);
+    int parentChildren(int position);
 
     /**
      * 是否是子类型

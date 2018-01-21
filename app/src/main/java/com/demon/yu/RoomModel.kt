@@ -6,4 +6,4 @@ package com.demon.yu
  * @date 2018/1/17
  *
  */
-data class RoomModel(var title:String,var windowTip:String,var breakfast:String,var orderStatus:String,var price:String)
+data class RoomModel(var ota:String,var person:String,var cancle:String,var breakfirst:String,var price:String,var tax:String)
