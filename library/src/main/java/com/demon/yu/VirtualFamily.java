@@ -8,7 +8,7 @@ public interface VirtualFamily {
 
 
     /**
-     * 是否是吸顶类型
+     * 是否是父类型
      *
      * @param position
      * @return
@@ -16,23 +16,23 @@ public interface VirtualFamily {
     boolean isParentType(int position);
 
     /**
-     * 吸顶类型所包含的子类型的数量
+     * 父类型包含的子类型的数量
      *
-     * @param position
-     * @return 最后一个子类型的位置
+     * @param parentPosition
+     * @return 父类型包含的子类型的数量
      */
-    int parentChildren(int position);
+    int parentChildren(int parentPosition);
 
     /**
      * 是否是子类型
      *
      * @param position
-     * @return
+     * @return boolean
      */
     boolean isChildType(int position);
 
     /**
-     * 返回子类型的父类型的位置
+     * 返回该子类型的父类型的位置
      *
      * @param childPosition
      * @return
