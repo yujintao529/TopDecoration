@@ -13,7 +13,7 @@
 <!-- more -->
 
 先看一个效果图(gif图)
-![Markdown](http://i1.bvimg.com/629323/1e9c284f2e1fd10d.gif)
+![Markdown](http://chuantu.biz/t6/213/1516683296x-1404793298.gif)
 
 
 那么根据上面的情况设计一个接口。
