@@ -1,4 +1,4 @@
-package com.demon.yu
+package com.demon.yu.decoration
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

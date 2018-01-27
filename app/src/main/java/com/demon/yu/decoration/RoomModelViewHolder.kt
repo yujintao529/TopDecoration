@@ -1,4 +1,4 @@
-package com.demon.yu
+package com.demon.yu.decoration
 
 import android.view.View
 import kotlinx.android.synthetic.main.room_model_view_holder.*
