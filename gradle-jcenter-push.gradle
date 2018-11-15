@@ -1,0 +1,139 @@
+/*
+ * Copyright 2013 Chris Banes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'signing'
+
+version = VERSION_NAME
+group = GROUP
+
+
+project.archivesBaseName = POM_ARTIFACT_ID
+println "~~~~~~" + project.archivesBaseName + "~~~~~~~"
+
+//android {
+//    libraryVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            output.outputFile = new File(
+//                    output.outputFile.parent,
+//                    POM_ARTIFACT_ID + ".aar".toLowerCase())
+//        }
+//    }
+//}
+//configurations.create("jcenter_upload")
+install {
+    repositories.mavenInstaller {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        configuration = configurations.archives
+        pom.groupId = GROUP
+        pom.artifactId = POM_ARTIFACT_ID
+        pom.version = VERSION_NAME
+
+        pom.project {
+            name POM_NAME
+            packaging POM_PACKAGING
+            description POM_DESCRIPTION
+            url POM_URL
+
+            scm {
+                url POM_SCM_URL
+                connection POM_SCM_CONNECTION
+                developerConnection POM_SCM_DEV_CONNECTION
+            }
+
+            licenses {
+                license {
+                    name POM_LICENCE_NAME
+                    url POM_LICENCE_URL
+                    distribution POM_LICENCE_DIST
+                }
+            }
+
+            developers {
+                developer {
+                    id POM_DEVELOPER_ID
+                    name POM_DEVELOPER_NAME
+                }
+            }
+        }
+    }
+
+    task androidJavadocs(type: Javadoc) {
+        options.encoding = "UTF-8"
+        source = android.sourceSets.main.java.source
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+    task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+        classifier = 'javadoc'
+        from androidJavadocs.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.source
+    }
+}
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+
+artifacts {
+    add("archives", androidSourcesJar)
+    add("archives", androidJavadocsJar)
+}
+
+signing {
+    sign configurations.archives
+}
+
+task printArchives(dependsOn: 'build') {
+    doFirst {
+        def configuration = project.configurations.getByName("archives")//获取名字为archives的configuration
+        def files = configuration?.getArtifacts()?.files?.getFiles()//获取artifacts 发布的文件
+        System.out.println("archives files length " + files.size())
+        files.each { file ->
+            System.out.println("files " + file.getName() + " " + file.getAbsolutePath())
+        }
+    }
+}
+
+
+project.archivesBaseName = POM_ARTIFACT_ID
+
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.key")
+    configurations = ['archives']
+    pkg {
+        repo = "repo"
+        //这个是在jcenter上建立的仓库名字，其实就是一个组织结构，例如，你可以在自己的账户上建立一个jcenter，然后在这个jcenter上建立这个package。此时这个repo就写jcenter
+        name = POM_ARTIFACT_ID //发布到Bintray上的项目名字
+        websiteUrl = POM_URL
+        vcsUrl = POM_SCM_CONNECTION
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}

@@ -1,5 +1,18 @@
 ## 基于RecycerView的decoration的吸顶联动的控件
 
+### 引入
+为了方便使用，把这个库放到了jcenter上。
+```
+implementation 'com.demon.yu:top-decoration:1.0.0'
+```
+#### 使用方式
+
+```java
+// virtualFamily 需要自己实现的接口，可以查看例子
+// headerContainer header的ViewGroup容器
+recyclerView.addItemDecoration(new TopDecoration(virtualFamily,recyclerView,linearLayoutManager,headerContainer))
+```
+
 ### 实现原理分析
 
 简单的说就是一个父亲后面跟着一堆孩子。它们是一对多的关系，所以有以下几个特性
@@ -65,3 +78,20 @@ public interface VirtualFamily {
 github地址: https://github.com/yujintao529/TopDecoration
 
 博客地址： http://www.demon-yu.com
+
+## License
+<pre>
+Copyright 2018 yujintao
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre>
