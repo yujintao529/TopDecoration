@@ -26,7 +26,8 @@ recyclerView.addItemDecoration(new TopDecoration(virtualFamily,recyclerView,line
 <!-- more -->
 
 先看一个效果图(gif图)
-![Markdown](http://chuantu.biz/t6/213/1516683296x-1404793298.gif)
+
+![tu](https://i.niupic.com/images/2018/09/06/5zxB.gif)
 
 
 那么根据上面的情况设计一个接口。
