@@ -16,6 +16,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'signing'
+apply plugin: "com.dorongold.task-tree"
 
 version = VERSION_NAME
 group = GROUP
@@ -35,7 +36,7 @@ println "~~~~~~" + project.archivesBaseName + "~~~~~~~"
 //}
 //configurations.create("jcenter_upload")
 install {
-    repositories.mavenInstaller {
+    def mavenResolver = repositories.mavenInstaller {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
         configuration = configurations.archives
         pom.groupId = GROUP
@@ -70,7 +71,6 @@ install {
             }
         }
     }
-
     task androidJavadocs(type: Javadoc) {
         options.encoding = "UTF-8"
         source = android.sourceSets.main.java.source
@@ -137,3 +137,4 @@ bintray {
         publish = true
     }
 }
+
